@@ -32,10 +32,25 @@ if ! "$PYTHON_BIN" -c "import claude_memory_mcp" 2>/dev/null; then
     exit 1
 fi
 
+# Read .env file and build -e flags for claude mcp add
+ENV_FLAGS=()
+ENV_FILE="$PROJECT_DIR/.env"
+if [[ -f "$ENV_FILE" ]]; then
+    while IFS= read -r line; do
+        # Skip comments and blank lines
+        [[ "$line" =~ ^[[:space:]]*# ]] && continue
+        [[ -z "${line// }" ]] && continue
+        ENV_FLAGS+=(-e "$line")
+    done < "$ENV_FILE"
+    echo "Loaded env from .env: ${ENV_FLAGS[*]}"
+else
+    echo "No .env file found — using defaults (localhost:8920)."
+fi
+
 # Remove existing registration if present, then re-register
 echo "Registering claude-memory MCP server for user $(whoami)..."
 claude mcp remove claude-memory 2>/dev/null || true
-claude mcp add claude-memory --scope user -- "$PYTHON_BIN" -m claude_memory_mcp.server
+claude mcp add claude-memory --scope user ${ENV_FLAGS[@]+"${ENV_FLAGS[@]}"} -- "$PYTHON_BIN" -m claude_memory_mcp.server
 
 echo ""
 echo "Done. The memory tools will be available in your next Claude Code session."

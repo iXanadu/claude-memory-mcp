@@ -75,20 +75,23 @@ Start a new Claude Code session — the five memory tools will be available auto
 
 ## Configuration
 
-Configuration is via environment variables. Copy the example and adjust if needed:
+Configuration is via environment variables in a `.env` file. `setup.sh` reads this file and passes the values to Claude Code's MCP config automatically.
 
 ```bash
 cp .env.example .env
+# Edit .env with your values, then re-run setup.sh
+./setup.sh
 ```
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `MEMORY_API_URL` | `http://localhost:8920` | ha-semantic-memory API endpoint |
+| `MEMORY_API_TOKEN` | *(empty)* | Optional bearer token (must match `HAMEM_API_TOKEN` on server) |
 | `MEMORY_DEFAULT_SCOPE` | `machine` | Default scope when none specified |
 
 The `.env` file is gitignored — host-specific values never enter the repo.
 
-For multi-machine setups, point `MEMORY_API_URL` at the Tailscale (or VPN) IP of the machine running ha-semantic-memory. See [Security Model](#security-model) — never use a public IP.
+For multi-machine setups, point `MEMORY_API_URL` at the hostname or Tailscale IP of the machine running ha-semantic-memory (e.g. `http://macmini:8920`). See [Security Model](#security-model) — never use a public IP.
 
 **Note:** This project does not hold any database credentials. PostgreSQL and Ollama connection details are configured in ha-semantic-memory itself (see its `HAMEM_*` env vars).
 
