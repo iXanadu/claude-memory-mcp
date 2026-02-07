@@ -23,11 +23,11 @@ if [[ -z "$PY_VERSION" ]]; then
 fi
 
 # Create virtualenv if it doesn't exist
-if ! pyenv versions --bare | grep -q "^${VENV_NAME}$"; then
+if pyenv prefix "$VENV_NAME" &>/dev/null; then
+    echo "pyenv virtualenv '$VENV_NAME' already exists."
+else
     echo "Creating pyenv virtualenv '$VENV_NAME' from Python $PY_VERSION..."
     pyenv virtualenv "$PY_VERSION" "$VENV_NAME"
-else
-    echo "pyenv virtualenv '$VENV_NAME' already exists."
 fi
 
 # Set local version
