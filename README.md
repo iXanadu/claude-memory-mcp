@@ -52,6 +52,10 @@ With no token set (the default), the API is unauthenticated — secured by netwo
 ## Quick Start
 
 ```bash
+# Create shared services directory (first time only)
+sudo mkdir -p /opt/srv
+sudo chown $(whoami):staff /opt/srv    # macOS — use $(whoami):$(whoami) on Linux
+
 # Clone
 git clone https://github.com/iXanadu/claude-memory-mcp.git /opt/srv/claude-memory-mcp
 cd /opt/srv/claude-memory-mcp
