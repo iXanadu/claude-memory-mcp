@@ -52,6 +52,21 @@ echo "Registering claude-memory MCP server for user $(whoami)..."
 claude mcp remove claude-memory 2>/dev/null || true
 claude mcp add claude-memory --scope user ${ENV_FLAGS[@]+"${ENV_FLAGS[@]}"} -- "$PYTHON_BIN" -m claude_memory_mcp.server
 
+# Install/update global CLAUDE.md (teaches Claude how to use memory tools)
+GLOBAL_CLAUDE="$HOME/.claude/CLAUDE.md"
+TEMPLATE_CLAUDE="$PROJECT_DIR/templates/GLOBAL_CLAUDE.md"
+if [[ ! -f "$GLOBAL_CLAUDE" ]]; then
+    mkdir -p "$HOME/.claude"
+    cp "$TEMPLATE_CLAUDE" "$GLOBAL_CLAUDE"
+    echo "Installed global CLAUDE.md to $GLOBAL_CLAUDE"
+elif ! diff -q "$TEMPLATE_CLAUDE" "$GLOBAL_CLAUDE" >/dev/null 2>&1; then
+    echo ""
+    echo "NOTE: $GLOBAL_CLAUDE differs from template."
+    echo "  To update: cp $TEMPLATE_CLAUDE $GLOBAL_CLAUDE"
+else
+    echo "Global CLAUDE.md is up to date."
+fi
+
 echo ""
 echo "Done. The memory tools will be available in your next Claude Code session."
 echo "Verify with: claude mcp list"
