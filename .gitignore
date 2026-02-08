@@ -8,3 +8,9 @@ build/
 .python-version
 .env
 *.log
+.claude/session_progress/
+claude/session_progress/
+claude/*.pdf
+claude/*.xlsx
+*.keys
+.keys
