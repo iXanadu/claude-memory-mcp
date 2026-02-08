@@ -1,6 +1,6 @@
 # claude-memory-mcp — Codebase State
 
-**Last Updated:** 2026-02-07
+**Last Updated:** 2026-02-08
 **Version:** 0.1.0
 **Status:** Production — Stable
 
@@ -21,12 +21,14 @@ Claude Code → claude-memory-mcp (stdio) → ha-semantic-memory (HTTP :8920) �
 
 - **25 tests passing** (14 server + 5 client + 6 scoping)
 - **Production**: Registered as MCP server, actively used by Claude Code sessions
-- **4 commits**: Initial release + install/setup fixes
+- **5 commits**: Initial release + install/setup fixes + Claude working structure
 
 ---
 
 ## Recent Major Work
 
+- **2026-02-08**: Rewrote global CLAUDE.md memory scoping docs — fixed peer confusion about scope isolation, project resolution, and search behavior. Created master copy in template repo.
+- **2026-02-07**: Added Claude Code working structure (.claude/CLAUDE.md, startup/wrapup commands, state files)
 - **Initial implementation**: MCP server with 5 tools, 3-scope model, httpx async client
 - **Install/setup fixes**: pyenv virtualenv detection, .env integration for MCP registration
 - **Quick Start fix**: Added `/opt/srv` directory setup step to README
