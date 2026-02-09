@@ -21,13 +21,13 @@ Claude Code → claude-memory-mcp (stdio) → ha-semantic-memory (HTTP :8920) �
 
 - **25 tests passing** (14 server + 5 client + 6 scoping)
 - **Production**: Registered as MCP server, actively used by Claude Code sessions
-- **5 commits**: Initial release + install/setup fixes + Claude working structure
+- **7 commits**: Initial release + install/setup fixes + Claude working structure + global CLAUDE.md template
 
 ---
 
 ## Recent Major Work
 
-- **2026-02-08**: Rewrote global CLAUDE.md memory scoping docs — fixed peer confusion about scope isolation, project resolution, and search behavior. Created master copy in template repo.
+- **2026-02-08**: Rewrote global CLAUDE.md memory scoping docs — fixed peer confusion about scope isolation, project resolution, and search behavior. Added `templates/GLOBAL_CLAUDE.md` as canonical master; `setup.sh` now deploys it to `~/.claude/CLAUDE.md`. Added machine scope to startup search pattern.
 - **2026-02-07**: Added Claude Code working structure (.claude/CLAUDE.md, startup/wrapup commands, state files)
 - **Initial implementation**: MCP server with 5 tools, 3-scope model, httpx async client
 - **Install/setup fixes**: pyenv virtualenv detection, .env integration for MCP registration
@@ -67,4 +67,5 @@ Run: `pytest tests/ -v`
 | `src/claude_memory_mcp/scoping.py` | Scope → user_id resolution |
 | `src/claude_memory_mcp/config.py` | Pydantic settings (env vars) |
 | `install.sh` | Create virtualenv, install deps |
-| `setup.sh` | Register/unregister MCP with Claude Code |
+| `setup.sh` | Register/unregister MCP with Claude Code, deploy global CLAUDE.md |
+| `templates/GLOBAL_CLAUDE.md` | Canonical global CLAUDE.md (cp to ~/.claude/CLAUDE.md) |

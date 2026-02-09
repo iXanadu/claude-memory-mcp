@@ -54,4 +54,4 @@ Project is stable and in production. No active development. Available for enhanc
 
 - Test count in README previously said 26 — that was ha-semantic-memory's count, not this project's (25)
 - The `.python-version` file points to `cc-memory-3.12` virtualenv and is gitignored
-- 2026-02-08: Rewrote global CLAUDE.md scoping docs. Peer confusion revealed that scope isolation and project resolution were not clearly documented. Master CLAUDE.md now in `claude_proj_template/templates/CLAUDE.md`, deployed to `~/.claude/CLAUDE.md`.
+- 2026-02-08: Rewrote global CLAUDE.md scoping docs. Peer confusion revealed that scope isolation and project resolution were not clearly documented. Master CLAUDE.md now in `templates/GLOBAL_CLAUDE.md` (this repo), deployed to `~/.claude/CLAUDE.md` by `setup.sh`.
