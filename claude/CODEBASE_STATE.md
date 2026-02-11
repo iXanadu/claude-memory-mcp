@@ -1,7 +1,7 @@
 # claude-memory-mcp — Codebase State
 
-**Last Updated:** 2026-02-08
-**Version:** 0.1.0
+**Last Updated:** 2026-02-11
+**Version:** 0.1.0 (93412ee)
 **Status:** Production — Stable
 
 ---
@@ -21,12 +21,14 @@ Claude Code → claude-memory-mcp (stdio) → ha-semantic-memory (HTTP :8920) �
 
 - **25 tests passing** (14 server + 5 client + 6 scoping)
 - **Production**: Registered as MCP server, actively used by Claude Code sessions
-- **7 commits**: Initial release + install/setup fixes + Claude working structure + global CLAUDE.md template
+- **10 commits**: All work through empty-query fix + version traceability
+- **Verified on MacMini**: Version reports `0.1.0 (93412ee)`, ready for multi-machine deployment
 
 ---
 
 ## Recent Major Work
 
+- **2026-02-11**: Fixed empty query string causing 422 error in `memory_search` — now returns "No memories found." gracefully. Added git commit hash to `memory_status` output for build traceability (`Server version: 0.1.0 (hash)`). Verified both fixes in production.
 - **2026-02-08**: Rewrote global CLAUDE.md memory scoping docs — fixed peer confusion about scope isolation, project resolution, and search behavior. Added `templates/GLOBAL_CLAUDE.md` as canonical master; `setup.sh` now deploys it to `~/.claude/CLAUDE.md`. Added machine scope to startup search pattern.
 - **2026-02-07**: Added Claude Code working structure (.claude/CLAUDE.md, startup/wrapup commands, state files)
 - **Initial implementation**: MCP server with 5 tools, 3-scope model, httpx async client
@@ -37,7 +39,7 @@ Claude Code → claude-memory-mcp (stdio) → ha-semantic-memory (HTTP :8920) �
 
 ## Next Planned Work
 
-No immediate tasks pending. Potential future work:
+- **Deploy to other machines** — clone, install, configure `MEMORY_API_URL` to point at MacMini
 - Add `memory_list` tool (list all keys for a scope)
 - Add `memory_update` tool (partial value updates)
 - Improve error messages when ha-semantic-memory is unreachable

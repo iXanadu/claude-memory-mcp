@@ -1,13 +1,13 @@
 # claude-memory-mcp — Context Memory
 
-**Last Updated:** 2026-02-08
+**Last Updated:** 2026-02-11
 **Status:** Stable / Maintenance
 
 ---
 
 ## Current Focus
 
-Project is stable and in production. No active development. Available for enhancements as needed.
+Project is stable and in production. Verified current on MacMini (`0.1.0 @ 93412ee`). Ready for multi-machine deployment. No active feature development.
 
 ---
 
@@ -21,6 +21,7 @@ Project is stable and in production. No active development. Available for enhanc
 | Thin wrapper pattern | All intelligence in ha-semantic-memory; this is just a transport adapter |
 | Optional bearer token | Security layer inherited from ha-semantic-memory; configured via .env |
 | pyenv virtualenv `cc-memory-3.12` | Follows project convention; isolated from system Python |
+| Always /wrapup before commit | Session state files should be current in every commit |
 
 ---
 
@@ -47,6 +48,7 @@ Project is stable and in production. No active development. Available for enhanc
 
 - If ha-semantic-memory is not running, all tools return connection errors (no retry logic)
 - The `setup.sh` script uses `claude mcp add` which requires Claude Code CLI to be installed
+- Empty query to `memory_search` is now handled gracefully (fixed 2026-02-11)
 
 ---
 
@@ -55,3 +57,5 @@ Project is stable and in production. No active development. Available for enhanc
 - Test count in README previously said 26 — that was ha-semantic-memory's count, not this project's (25)
 - The `.python-version` file points to `cc-memory-3.12` virtualenv and is gitignored
 - 2026-02-08: Rewrote global CLAUDE.md scoping docs. Peer confusion revealed that scope isolation and project resolution were not clearly documented. Master CLAUDE.md now in `templates/GLOBAL_CLAUDE.md` (this repo), deployed to `~/.claude/CLAUDE.md` by `setup.sh`.
+- 2026-02-11: `memory_status` now reports `Server version: 0.1.0 (93412ee)` with git hash for traceability. `-dirty` suffix if uncommitted changes exist. Version shown even when backend is unreachable.
+- 2026-02-11: Ready for multi-machine deployment. Other machines need `MEMORY_API_URL` pointed at MacMini (not localhost) since ha-semantic-memory runs centrally.
