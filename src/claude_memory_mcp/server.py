@@ -53,6 +53,9 @@ async def memory_search(
         limit: Max results to return (default 5)
         scope: machine (default), shared (all machines), or project (current project)
     """
+    if not query or not query.strip():
+        return "No memories found."
+
     user_id = resolve_user_id(scope or None, settings.memory_default_scope)
     result = await _client.search(
         query=query,

@@ -57,6 +57,18 @@ async def test_memory_search_empty(respx_mock):
     assert result == "No memories found."
 
 
+async def test_memory_search_empty_query():
+    """Empty query string should return 'No memories found.' without hitting the API."""
+    result = await memory_search(query="")
+    assert result == "No memories found."
+
+
+async def test_memory_search_whitespace_query():
+    """Whitespace-only query should return 'No memories found.' without hitting the API."""
+    result = await memory_search(query="   ")
+    assert result == "No memories found."
+
+
 @respx.mock(base_url="http://localhost:8920")
 async def test_memory_get_found(respx_mock):
     respx_mock.post("/memory/get").mock(
