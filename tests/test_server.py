@@ -5,6 +5,7 @@ import respx
 from unittest.mock import patch
 
 from claude_memory_mcp.server import (
+    VERSION,
     memory_store,
     memory_search,
     memory_get,
@@ -130,6 +131,7 @@ async def test_memory_status_ok(respx_mock):
     )
     result = await memory_status()
     assert "Memory service: ok" in result
+    assert f"Server version: {VERSION}" in result
     assert "postgres: ok" in result
 
 
@@ -141,6 +143,7 @@ async def test_memory_status_unreachable():
     ):
         result = await memory_status()
         assert "unreachable" in result
+        assert f"Server version: {VERSION}" in result
 
 
 @respx.mock(base_url="http://localhost:8920")

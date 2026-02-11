@@ -1,10 +1,42 @@
 """MCP server providing persistent semantic memory for Claude Code."""
 
+import subprocess
+from pathlib import Path
+
 from mcp.server.fastmcp import FastMCP
 
 from claude_memory_mcp.client import MemoryClient
 from claude_memory_mcp.config import settings
 from claude_memory_mcp.scoping import resolve_user_id
+
+
+def _get_version() -> str:
+    """Return version string with git short hash, e.g. '0.1.0 (abc1234)'.
+
+    Falls back to just the version number if git is unavailable.
+    """
+    version = "0.1.0"
+    try:
+        repo_root = Path(__file__).resolve().parents[2]
+        commit = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=repo_root,
+            stderr=subprocess.DEVNULL,
+            text=True,
+        ).strip()
+        dirty = subprocess.check_output(
+            ["git", "status", "--porcelain"],
+            cwd=repo_root,
+            stderr=subprocess.DEVNULL,
+            text=True,
+        ).strip()
+        suffix = "-dirty" if dirty else ""
+        return f"{version} ({commit}{suffix})"
+    except Exception:
+        return version
+
+
+VERSION = _get_version()
 
 mcp = FastMCP(
     "claude-memory",
@@ -119,12 +151,12 @@ async def memory_status() -> str:
         result = await _client.health()
         checks = result.get("checks", {})
         status = result.get("status", "unknown")
-        lines = [f"Memory service: {status}"]
+        lines = [f"Memory service: {status}", f"Server version: {VERSION}"]
         for name, ok in checks.items():
             lines.append(f"  {name}: {'ok' if ok else 'FAILED'}")
         return "\n".join(lines)
     except Exception as e:
-        return f"Memory service unreachable: {e}"
+        return f"Memory service unreachable: {e}\nServer version: {VERSION}"
 
 
 def main():
