@@ -1,4 +1,16 @@
-# claude-memory-mcp
+> [!WARNING]
+> **This project has been deprecated and archived.**
+>
+> All functionality has been merged into **[engram](https://github.com/iXanadu/engram)** — a general-purpose semantic memory service for AI agents.
+>
+> - MCP server code → `engram/integrations/claude-code/` (package: `engram-mcp`)
+> - Backend server → `engram/server/`
+>
+> This repo will not receive further updates. Please use engram for new installations.
+
+---
+
+# claude-memory-mcp (Archived)
 
 MCP server that gives [Claude Code](https://docs.anthropic.com/en/docs/claude-code) persistent semantic memory across sessions, projects, and machines.
 
